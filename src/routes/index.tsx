@@ -114,7 +114,7 @@ function Hero() {
                 <div className="h-px w-20 bg-brass" />
                 <p className="eyebrow text-brass/90">Vinhandel</p>
                 <p className="font-display text-5xl text-paper">BJ Wine</p>
-                <p className="font-display text-lg italic text-paper/70">Anno 2024</p>
+                <p className="font-display text-lg italic text-paper/70">Since 2008</p>
                 <div className="h-px w-20 bg-brass" />
               </div>
             </div>
