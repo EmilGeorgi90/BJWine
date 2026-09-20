@@ -40,9 +40,9 @@
   --radius: 0.5rem;
 
   /* Paper & ink */
-  --background: oklch(0.965 0.012 82); /* warm cream */
-  --paper: oklch(0.98 0.008 82); /* lighter cream card */
-  --foreground: oklch(0.22 0.02 30); /* deep ink */
+  --background: oklch(0.965 0.012 82);       /* warm cream */
+  --paper: oklch(0.98 0.008 82);             /* lighter cream card */
+  --foreground: oklch(0.22 0.02 30);         /* deep ink */
   --ink: oklch(0.18 0.015 30);
 
   --card: var(--paper);
@@ -68,18 +68,13 @@
   * {
     border-color: var(--color-border);
   }
-  html,
-  body {
+  html, body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  .font-display {
+  h1, h2, h3, h4, .font-display {
     font-family: var(--font-display);
     font-weight: 500;
     letter-spacing: -0.01em;

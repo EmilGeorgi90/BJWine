@@ -5,8 +5,10 @@ import {
   sanityClient,
   urlFor,
   wineListQuery,
+  wineCategoriesQuery,
   homePageQuery,
   type Wine,
+  type WineCategory,
   type HomePage,
 } from "@/lib/sanity";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
@@ -24,11 +26,28 @@ const homePageQueryOptions = queryOptions({
   staleTime: 60_000,
 });
 
+const wineCategoriesQueryOptions = queryOptions({
+  queryKey: ["wineCategories"],
+  queryFn: () => sanityClient.fetch<WineCategory[]>(wineCategoriesQuery),
+  staleTime: 60_000,
+});
+
 export const Route = createFileRoute("/")({
   loader: ({ context }) => {
     context.queryClient.ensureQueryData(winesQueryOptions);
     context.queryClient.ensureQueryData(homePageQueryOptions);
+    context.queryClient.ensureQueryData(wineCategoriesQueryOptions);
   },
+  head: () => ({
+    meta: [
+      { title: "Vinkatalog – BJ Wine" },
+      { name: "description", content: "Se det aktuelle udvalg af vine hos BJ Wine." },
+      { property: "og:title", content: "Vinkatalog – BJ Wine" },
+      { property: "og:description", content: "Se det aktuelle udvalg af vine hos BJ Wine." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: HomePageRoute,
 });
 
@@ -61,12 +80,7 @@ function Hero() {
     data?.description ??
     "Velkommen til BJ Wine. Vores katalog viser de vine, du kan finde i butikken lige nu.";
   const banner = data?.bannerImage
-    ? urlFor(data.bannerImage)
-        .width(1200)
-        .height(1500)
-        .fit("crop")
-        .auto("format")
-        .url()
+    ? urlFor(data.bannerImage).width(1200).height(1500).fit("crop").auto("format").url()
     : null;
 
   return (
@@ -100,9 +114,7 @@ function Hero() {
                 <div className="h-px w-20 bg-brass" />
                 <p className="eyebrow text-brass/90">Vinhandel</p>
                 <p className="font-display text-5xl text-paper">BJ Wine</p>
-                <p className="font-display text-lg italic text-paper/70">
-                  Anno 2024
-                </p>
+                <p className="font-display text-lg italic text-paper/70">Anno 2024</p>
                 <div className="h-px w-20 bg-brass" />
               </div>
             </div>
@@ -134,6 +146,7 @@ function CatalogHeader() {
 
 function Catalog() {
   const { data: wines } = useSuspenseQuery(winesQueryOptions);
+  const { data: categories } = useSuspenseQuery(wineCategoriesQueryOptions);
 
   if (!wines || wines.length === 0) {
     return (
@@ -146,12 +159,37 @@ function Catalog() {
     );
   }
 
+  const sections = categories
+    .map((category) => ({
+      ...category,
+      wines: wines.filter((wine) => wine.category?._id === category._id),
+    }))
+    .filter((category) => category.wines.length > 0);
+  const uncategorized = wines.filter((wine) => !wine.category);
+
   return (
-    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {wines.map((wine) => (
-        <WineCard key={wine._id} wine={wine} />
+    <div className="space-y-20">
+      {sections.map((category) => (
+        <WineSection key={category._id} title={category.name} wines={category.wines} />
       ))}
+      {uncategorized.length > 0 && <WineSection title="Andre vine" wines={uncategorized} />}
     </div>
+  );
+}
+
+function WineSection({ title, wines }: { title: string; wines: Wine[] }) {
+  return (
+    <section>
+      <div className="mb-8 flex items-center gap-6">
+        <h3 className="font-display text-3xl text-primary sm:text-4xl">{title}</h3>
+        <div className="h-px flex-1 bg-rule/40" />
+      </div>
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {wines.map((wine) => (
+          <WineCard key={wine._id} wine={wine} />
+        ))}
+      </div>
+    </section>
   );
 }
 

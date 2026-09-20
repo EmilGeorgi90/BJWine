@@ -8,114 +8,144 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as SitemapDotxmlRouteImport } from "./routes/sitemap[.]xml";
-import { Route as OmRouteImport } from "./routes/om";
-import { Route as KontaktRouteImport } from "./routes/kontakt";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as VinIdRouteImport } from "./routes/vin.$id";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as VinsmagningRouteImport } from './routes/vinsmagning'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as OmRouteImport } from './routes/om'
+import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as VinIdRouteImport } from './routes/vin.$id'
 
+const VinsmagningRoute = VinsmagningRouteImport.update({
+  id: '/vinsmagning',
+  path: '/vinsmagning',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: "/sitemap.xml",
-  path: "/sitemap.xml",
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const OmRoute = OmRouteImport.update({
-  id: "/om",
-  path: "/om",
+  id: '/om',
+  path: '/om',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const KontaktRoute = KontaktRouteImport.update({
-  id: "/kontakt",
-  path: "/kontakt",
+  id: '/kontakt',
+  path: '/kontakt',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const VinIdRoute = VinIdRouteImport.update({
-  id: "/vin/$id",
-  path: "/vin/$id",
+  id: '/vin/$id',
+  path: '/vin/$id',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/kontakt": typeof KontaktRoute;
-  "/om": typeof OmRoute;
-  "/sitemap.xml": typeof SitemapDotxmlRoute;
-  "/vin/$id": typeof VinIdRoute;
+  '/': typeof IndexRoute
+  '/kontakt': typeof KontaktRoute
+  '/om': typeof OmRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/vinsmagning': typeof VinsmagningRoute
+  '/vin/$id': typeof VinIdRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/kontakt": typeof KontaktRoute;
-  "/om": typeof OmRoute;
-  "/sitemap.xml": typeof SitemapDotxmlRoute;
-  "/vin/$id": typeof VinIdRoute;
+  '/': typeof IndexRoute
+  '/kontakt': typeof KontaktRoute
+  '/om': typeof OmRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/vinsmagning': typeof VinsmagningRoute
+  '/vin/$id': typeof VinIdRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexRoute;
-  "/kontakt": typeof KontaktRoute;
-  "/om": typeof OmRoute;
-  "/sitemap.xml": typeof SitemapDotxmlRoute;
-  "/vin/$id": typeof VinIdRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/kontakt': typeof KontaktRoute
+  '/om': typeof OmRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/vinsmagning': typeof VinsmagningRoute
+  '/vin/$id': typeof VinIdRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/kontakt" | "/om" | "/sitemap.xml" | "/vin/$id";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/kontakt" | "/om" | "/sitemap.xml" | "/vin/$id";
-  id: "__root__" | "/" | "/kontakt" | "/om" | "/sitemap.xml" | "/vin/$id";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/kontakt'
+    | '/om'
+    | '/sitemap.xml'
+    | '/vinsmagning'
+    | '/vin/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/kontakt' | '/om' | '/sitemap.xml' | '/vinsmagning' | '/vin/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/kontakt'
+    | '/om'
+    | '/sitemap.xml'
+    | '/vinsmagning'
+    | '/vin/$id'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  KontaktRoute: typeof KontaktRoute;
-  OmRoute: typeof OmRoute;
-  SitemapDotxmlRoute: typeof SitemapDotxmlRoute;
-  VinIdRoute: typeof VinIdRoute;
+  IndexRoute: typeof IndexRoute
+  KontaktRoute: typeof KontaktRoute
+  OmRoute: typeof OmRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  VinsmagningRoute: typeof VinsmagningRoute
+  VinIdRoute: typeof VinIdRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/sitemap.xml": {
-      id: "/sitemap.xml";
-      path: "/sitemap.xml";
-      fullPath: "/sitemap.xml";
-      preLoaderRoute: typeof SitemapDotxmlRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/om": {
-      id: "/om";
-      path: "/om";
-      fullPath: "/om";
-      preLoaderRoute: typeof OmRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/kontakt": {
-      id: "/kontakt";
-      path: "/kontakt";
-      fullPath: "/kontakt";
-      preLoaderRoute: typeof KontaktRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/vin/$id": {
-      id: "/vin/$id";
-      path: "/vin/$id";
-      fullPath: "/vin/$id";
-      preLoaderRoute: typeof VinIdRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/vinsmagning': {
+      id: '/vinsmagning'
+      path: '/vinsmagning'
+      fullPath: '/vinsmagning'
+      preLoaderRoute: typeof VinsmagningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/om': {
+      id: '/om'
+      path: '/om'
+      fullPath: '/om'
+      preLoaderRoute: typeof OmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kontakt': {
+      id: '/kontakt'
+      path: '/kontakt'
+      fullPath: '/kontakt'
+      preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vin/$id': {
+      id: '/vin/$id'
+      path: '/vin/$id'
+      fullPath: '/vin/$id'
+      preLoaderRoute: typeof VinIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -124,18 +154,19 @@ const rootRouteChildren: RootRouteChildren = {
   KontaktRoute: KontaktRoute,
   OmRoute: OmRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  VinsmagningRoute: VinsmagningRoute,
   VinIdRoute: VinIdRoute,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from "./router.tsx";
-import type { startInstance } from "./start.ts";
-declare module "@tanstack/react-start" {
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
   interface Register {
-    ssr: true;
-    router: Awaited<ReturnType<typeof getRouter>>;
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>;
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

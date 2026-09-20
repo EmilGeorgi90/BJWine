@@ -2,11 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import {
-  sanityClient,
-  contactPageQuery,
-  type ContactPage as ContactPageData,
-} from "@/lib/sanity";
+import { sanityClient, contactPageQuery, type ContactPage as ContactPageData } from "@/lib/sanity";
 
 const contactQueryOptions = queryOptions({
   queryKey: ["contactPage"],
@@ -15,8 +11,23 @@ const contactQueryOptions = queryOptions({
 });
 
 export const Route = createFileRoute("/kontakt")({
-  loader: ({ context }) =>
-    context.queryClient.ensureQueryData(contactQueryOptions),
+  loader: ({ context }) => context.queryClient.ensureQueryData(contactQueryOptions),
+  head: () => ({
+    meta: [
+      { title: "Kontakt – BJ Wine" },
+      {
+        name: "description",
+        content: "Find adresse, åbningstider og kontaktoplysninger til BJ Wine.",
+      },
+      { property: "og:title", content: "Kontakt – BJ Wine" },
+      {
+        property: "og:description",
+        content: "Find adresse, åbningstider og kontaktoplysninger til BJ Wine.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: ContactPage,
 });
 
@@ -44,9 +55,7 @@ function ContactContent() {
   return (
     <section className="container-editorial py-20">
       <p className="eyebrow mb-6">{eyebrow}</p>
-      <h1 className="font-display text-5xl leading-tight text-primary sm:text-6xl">
-        {title}
-      </h1>
+      <h1 className="font-display text-5xl leading-tight text-primary sm:text-6xl">{title}</h1>
 
       <div className="mt-16 grid gap-12 md:grid-cols-3">
         {address.length > 0 && (

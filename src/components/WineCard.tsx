@@ -2,8 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { urlFor, type Wine } from "@/lib/sanity";
 
 export function WineCard({ wine }: { wine: Wine }) {
-  const hasImage = Boolean(wine.image);
-
   return (
     <Link
       to="/vin/$id"
@@ -11,14 +9,9 @@ export function WineCard({ wine }: { wine: Wine }) {
       className="group flex flex-col overflow-hidden rounded-sm border border-border/70 bg-card transition hover:border-primary/60 hover:shadow-[0_20px_40px_-30px_rgba(60,10,20,0.35)]"
     >
       <div className="relative flex aspect-[3/4] items-center justify-center overflow-hidden bg-muted/60">
-        {hasImage ? (
+        {wine.image ? (
           <img
-            src={urlFor(wine.image!)
-              .width(600)
-              .height(800)
-              .fit("crop")
-              .auto("format")
-              .url()}
+            src={urlFor(wine.image).width(600).height(800).fit("crop").auto("format").url()}
             alt={wine.name}
             loading="lazy"
             className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
@@ -28,9 +21,7 @@ export function WineCard({ wine }: { wine: Wine }) {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-2 px-5 py-5">
-        <h3 className="font-display text-xl leading-tight text-ink">
-          {wine.name}
-        </h3>
+        <h3 className="font-display text-xl leading-tight text-ink">{wine.name}</h3>
         {wine.description ? (
           <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
             {wine.description}
